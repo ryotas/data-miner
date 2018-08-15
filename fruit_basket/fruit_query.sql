@@ -1,5 +1,5 @@
 SELECT consequent, MAX(lift)
-FROM fruit_suggestion
+FROM suggestion
 WHERE
     antecedent = UPPER(:v1)
 AND consequent != UPPER(:v1)
@@ -8,7 +8,7 @@ ORDER BY MAX(lift) DESC
 ;
 
 SELECT consequent, MAX(lift)
-FROM fruit_suggestion
+FROM suggestion
 WHERE antecedent IN (
   UPPER(:v1)
 , UPPER(:v2)
