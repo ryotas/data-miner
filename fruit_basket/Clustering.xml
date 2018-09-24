@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <WorkflowProcess Version="12.2.0.0.1" DBVersion="12.2.0.1.0" Schema="" xmlns="http://xmlns.oracle.com/odmr11">
     <Nodes>
-        <DataSource Id="10001" Name="FRUIT_TABLE_NONULL" Status="Complete">
-            <Icon XCOORD="126" YCOORD="213"></Icon>
-            <Messages/>
-            <Parallelism Enable="false">
-                <SystemDetermined/>
-            </Parallelism>
-            <CacheSettings UseFullData="false" GenerateCache="false">
-                <NumberOfRows>2000</NumberOfRows>
-                <Method>
-                    <TopN/>
-                </Method>
-            </CacheSettings>
-            <SQLExpression>"N$10001" as (select "FRUIT_TABLE_NONULL"."APPLE", 
-"FRUIT_TABLE_NONULL"."PAPAYA", 
-"FRUIT_TABLE_NONULL"."MANGO", 
-"FRUIT_TABLE_NONULL"."ID", 
-"FRUIT_TABLE_NONULL"."PINEAPPLE", 
-"FRUIT_TABLE_NONULL"."BANANA", 
-"FRUIT_TABLE_NONULL"."MELON", 
-"FRUIT_TABLE_NONULL"."ORANGE" 
-from "DMUSER"."FRUIT_TABLE_NONULL"  )</SQLExpression>
-            <Attributes>
-                <Attribute Name="APPLE" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="BANANA" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="ID" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="MANGO" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="MELON" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="ORANGE" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="PAPAYA" DataType="NUMBER" Status="Valid"/>
-                <Attribute Name="PINEAPPLE" DataType="NUMBER" Status="Valid"/>
-            </Attributes>
-            <SourceTable Schema="" Name="FRUIT_TABLE_NONULL" Synonym="false"/>
-            <JSONColumns/>
-            <DataGuideSettings Generate="true" UseFullData="false" UseFullDoc="false">
-                <NumberOfRows>2000</NumberOfRows>
-                <NumberOfValues>10000</NumberOfValues>
-            </DataGuideSettings>
-        </DataSource>
         <DataSource Id="10007" Name="FRUIT" Status="Complete">
             <Icon XCOORD="144" YCOORD="446"></Icon>
             <Messages/>
@@ -79,8 +41,8 @@ from "DMUSER"."FRUIT"  )</SQLExpression>
                 <NumberOfValues>10000</NumberOfValues>
             </DataGuideSettings>
         </DataSource>
-        <CreateTable TableName="OUTPUT_2_27" Table="true" Id="10068" Name="OUTPUT_2_27" Status="Complete">
-            <Icon XCOORD="792" YCOORD="491"></Icon>
+        <CreateTable TableName="OUTPUT_FEAT" Table="true" AutoSpec="Yes" Id="10068" Name="OUTPUT_FEAT" Status="Complete">
+            <Icon XCOORD="651" YCOORD="431"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -93,6 +55,8 @@ from "DMUSER"."FRUIT"  )</SQLExpression>
             </CacheSettings>
             <SQLExpression>"N$10068" AS ( SELECT  "FEAT_PCA_2_27_FVAL_1" ,
  "FEAT_PCA_2_27_FVAL_2" ,
+ "FEAT_NMF_1_27_FVAL_1" ,
+ "FEAT_NMF_1_27_FVAL_2" ,
  "CID" ,
  "APPLE_SUM" ,
  "BANANA_SUM" ,
@@ -100,10 +64,12 @@ from "DMUSER"."FRUIT"  )</SQLExpression>
  "MELON_SUM" ,
  "ORANGE_SUM" ,
  "PAPAYA_SUM" ,
- "PINEAPPLE_SUM"  FROM "OUTPUT_2_27")</SQLExpression>
+ "PINEAPPLE_SUM"  FROM "OUTPUT_FEAT")</SQLExpression>
             <DBAttributes>
                 <DBAttribute Key="No" Index="No" Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
                 <DBAttribute Key="No" Index="No" Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <DBAttribute Key="No" Index="No" Name="FEAT_NMF_1_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <DBAttribute Key="No" Index="No" Name="FEAT_NMF_1_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
                 <DBAttribute Key="No" Index="No" Name="CID" DataType="NUMBER" Status="Valid"/>
                 <DBAttribute Key="No" Index="No" Name="APPLE_SUM" DataType="NUMBER" Status="Valid"/>
                 <DBAttribute Key="No" Index="No" Name="BANANA_SUM" DataType="NUMBER" Status="Valid"/>
@@ -114,17 +80,13 @@ from "DMUSER"."FRUIT"  )</SQLExpression>
                 <DBAttribute Key="No" Index="No" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
             </DBAttributes>
             <JSONColumns/>
-            <DataGuideSettings Generate="true" UseFullData="false" UseFullDoc="false">
-                <NumberOfRows>2000</NumberOfRows>
-                <NumberOfValues>10000</NumberOfValues>
-            </DataGuideSettings>
             <CreateTableOptions>
                 <Logging>NOLOGGING</Logging>
                 <TableCompression>ROW STORE COMPRESS</TableCompression>
             </CreateTableOptions>
         </CreateTable>
         <Aggregation Id="10008" Name="Aggregate" Status="Complete">
-            <Icon XCOORD="299" YCOORD="447"></Icon>
+            <Icon XCOORD="247" YCOORD="446"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -250,7 +212,7 @@ FROM
             <AutoSpec>Yes</AutoSpec>
         </Aggregation>
         <Join UseCartesian="false" Id="10070" Name="Join" Status="Complete">
-            <Icon XCOORD="793" YCOORD="639"></Icon>
+            <Icon XCOORD="653" YCOORD="565"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -262,578 +224,58 @@ FROM
                 </Method>
             </CacheSettings>
             <SQLExpression>"N$10070" as (SELECT 
-"OUTPUT_2_27"."FEAT_PCA_2_27_FVAL_1"
-, "OUTPUT_2_27"."FEAT_PCA_2_27_FVAL_2"
-, "OUTPUT_2_27"."CID"
-, "OUTPUT_2_27"."APPLE_SUM"
-, "OUTPUT_2_27"."BANANA_SUM"
-, "OUTPUT_2_27"."MANGO_SUM"
-, "OUTPUT_2_27"."MELON_SUM"
-, "OUTPUT_2_27"."ORANGE_SUM"
-, "OUTPUT_2_27"."PAPAYA_SUM"
-, "OUTPUT_2_27"."PINEAPPLE_SUM"
-, "Apply"."CLUS_KM_2_27_CLID"
-, "Apply"."CLUS_KM_2_27_PROB"
-, "Apply"."CLUS_OC_2_27_CLID"
-, "Apply"."CLUS_OC_2_27_PROB"
-, "Apply"."CID" "CID1"
+"OUTPUT_FEAT"."FEAT_PCA_2_27_FVAL_1"
+, "OUTPUT_FEAT"."FEAT_PCA_2_27_FVAL_2"
+, "OUTPUT_FEAT"."FEAT_NMF_1_27_FVAL_1"
+, "OUTPUT_FEAT"."FEAT_NMF_1_27_FVAL_2"
+, "OUTPUT_FEAT"."CID"
+, "OUTPUT_FEAT"."APPLE_SUM"
+, "OUTPUT_FEAT"."BANANA_SUM"
+, "OUTPUT_FEAT"."MANGO_SUM"
+, "OUTPUT_FEAT"."MELON_SUM"
+, "OUTPUT_FEAT"."ORANGE_SUM"
+, "OUTPUT_FEAT"."PAPAYA_SUM"
+, "OUTPUT_FEAT"."PINEAPPLE_SUM"
+, "Apply Clust"."CLUS_KM_2_27_CLID"
+, "Apply Clust"."CLUS_KM_2_27_PROB"
+, "Apply Clust"."CLUS_OC_2_27_CLID"
+, "Apply Clust"."CLUS_OC_2_27_PROB"
+, "Apply Clust"."CID" "CID1"
 
 FROM
-{INPUT_SOURCE:10068} "OUTPUT_2_27"
-INNER JOIN {INPUT_SOURCE:10053} "Apply"
-ON "OUTPUT_2_27"."CID" = "Apply"."CID"
+{INPUT_SOURCE:10068} "OUTPUT_FEAT"
+INNER JOIN {INPUT_SOURCE:10053} "Apply Clust"
+ON "OUTPUT_FEAT"."CID" = "Apply Clust"."CID"
 
  )</SQLExpression>
             <KeyColumns AutoSpec="No">
                 <JoinColumn Type="Inner">
-                    <LeftColumn NodeId="10068" NodeName="OUTPUT_2_27" Key="Yes" Name="CID" DataType="NUMBER" Status="Valid"/>
-                    <RightColumn NodeId="10053" NodeName="Apply" Key="Yes" Name="CID" DataType="NUMBER" Status="Valid"/>
+                    <LeftColumn NodeId="10068" NodeName="OUTPUT_FEAT" Key="Yes" Name="CID" DataType="NUMBER" Status="Valid"/>
+                    <RightColumn NodeId="10053" NodeName="Apply Clust" Key="Yes" Name="CID" DataType="NUMBER" Status="Valid"/>
                 </JoinColumn>
             </KeyColumns>
             <OutputColumns AutoSpec="Yes">
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="CID" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="APPLE_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="BANANA_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="MANGO_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="MELON_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="ORANGE_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="PAPAYA_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10068" NodeName="OUTPUT_2_27" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10053" NodeName="Apply" Name="CLUS_KM_2_27_CLID" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10053" NodeName="Apply" Name="CLUS_KM_2_27_PROB" DataType="BINARY_DOUBLE" Status="Valid"/>
-                <RefDBColumn NodeId="10053" NodeName="Apply" Name="CLUS_OC_2_27_CLID" DataType="NUMBER" Status="Valid"/>
-                <RefDBColumn NodeId="10053" NodeName="Apply" Name="CLUS_OC_2_27_PROB" DataType="BINARY_DOUBLE" Status="Valid"/>
-                <RefDBColumn NodeId="10053" NodeName="Apply" Name="CID" DataType="NUMBER" Status="Valid" Alias="CID1"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="FEAT_NMF_1_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="FEAT_NMF_1_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="CID" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="APPLE_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="BANANA_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="MANGO_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="MELON_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="ORANGE_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="PAPAYA_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10068" NodeName="OUTPUT_FEAT" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10053" NodeName="Apply Clust" Name="CLUS_KM_2_27_CLID" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10053" NodeName="Apply Clust" Name="CLUS_KM_2_27_PROB" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <RefDBColumn NodeId="10053" NodeName="Apply Clust" Name="CLUS_OC_2_27_CLID" DataType="NUMBER" Status="Valid"/>
+                <RefDBColumn NodeId="10053" NodeName="Apply Clust" Name="CLUS_OC_2_27_PROB" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <RefDBColumn NodeId="10053" NodeName="Apply Clust" Name="CID" DataType="NUMBER" Status="Valid" Alias="CID1"/>
             </OutputColumns>
         </Join>
-        <ClusteringBuild MaxNumPartitions="1000" ODMS_SAMPLING="false" Id="10005" Name="Clust Build" Status="Complete">
-            <Icon XCOORD="326" YCOORD="212"></Icon>
-            <Messages/>
-            <Parallelism Enable="false">
-                <SystemDetermined/>
-            </Parallelism>
-            <BuildDataSource SourceId="10001"/>
-            <CaseAttributes>
-                <Attribute Name="ID" DataType="NUMBER" Status="Valid"/>
-            </CaseAttributes>
-            <MiningAttributes AutoSpec="Yes">
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="APPLE" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="BANANA" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="No" Name="ID" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="MANGO" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="MELON" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="ORANGE" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="PAPAYA" DataType="NUMBER" Status="Valid"/>
-                <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="PINEAPPLE" DataType="NUMBER" Status="Valid"/>
-            </MiningAttributes>
-            <Stoplists>
-                <Stoplist Id="1" Name="Default" Type="Basic" Language="ENGLISH" DBName="">
-                    <StopTokens>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>Mr</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>Mrs</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>Ms</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>a</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>all</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>almost</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>also</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>although</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>an</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>and</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>any</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>are</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>as</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>at</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>be</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>because</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>been</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>both</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>but</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>by</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>can</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>could</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>d</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>did</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>do</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>does</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>either</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>for</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>from</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>had</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>has</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>have</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>having</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>he</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>her</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>here</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>hers</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>him</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>his</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>how</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>however</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>i</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>if</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>in</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>into</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>is</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>it</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>its</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>just</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>ll</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>me</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>might</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>my</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>no</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>non</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>nor</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>not</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>of</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>on</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>one</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>only</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>onto</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>or</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>our</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>ours</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>s</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>shall</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>she</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>should</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>since</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>so</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>some</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>still</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>such</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>t</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>than</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>that</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>the</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>their</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>them</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>then</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>there</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>therefore</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>these</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>they</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>this</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>those</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>though</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>through</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>thus</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>to</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>too</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>until</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>ve</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>very</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>was</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>we</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>were</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>what</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>when</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>where</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>whether</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>which</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>while</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>who</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>whose</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>why</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>will</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>with</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>would</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>yet</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>you</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>your</Item>
-                        </Token>
-                        <Token Type="Word" Language="ENGLISH">
-                            <Item>yours</Item>
-                        </Token>
-                    </StopTokens>
-                </Stoplist>
-            </Stoplists>
-            <TextSettings TransformType="Token" CategoricalCutOffValue="200">
-                <Token>
-                    <Token MaxNumberPerDoc="50" MaxNumberAllDocs="3000" MinNumberAllDocs="1" Frequency="IDF" StoplistId="1" Policy="">
-                        <Lexer Name="" Type="Basic">
-                            <Settings/>
-                        </Lexer>
-                        <Languages>
-                            <Language Name="ENGLISH" Type="SingleByte"/>
-                        </Languages>
-                    </Token>
-                </Token>
-                <Theme Type="Single">
-                    <Token MaxNumberPerDoc="50" MaxNumberAllDocs="3000" Frequency="IDF" StoplistId="1" Policy="">
-                        <Lexer Type="Basic">
-                            <Settings>
-                                <Attribute Name="index_themes" ValueString="YES" Type="String"/>
-                                <Attribute Name="theme_language" ValueString="ENGLISH" Type="String"/>
-                            </Settings>
-                        </Lexer>
-                        <Languages>
-                            <Language Name="ENGLISH" Type="SingleByte"/>
-                        </Languages>
-                    </Token>
-                </Theme>
-                <Synonym>
-                    <Token MaxNumberPerDoc="50" MaxNumberAllDocs="3000" Frequency="IDF" StoplistId="1" Policy="">
-                        <Lexer Name="" Type="Basic">
-                            <Settings/>
-                        </Lexer>
-                        <Languages>
-                            <Language Name="ENGLISH" Type="SingleByte"/>
-                        </Languages>
-                    </Token>
-                </Synonym>
-            </TextSettings>
-            <TextAttributes/>
-            <HeuristicSummaryResult StatisticTable="ODMR$00_37_17_600257NEUWXIZ">
-                <Attribute Name="APPLE">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-                <Attribute Name="BANANA">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-                <Attribute Name="ID">
-                    <Reason Type="INPUT_NONE"/>
-                </Attribute>
-                <Attribute Name="MANGO">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-                <Attribute Name="MELON">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-                <Attribute Name="ORANGE">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-                <Attribute Name="PAPAYA">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-                <Attribute Name="PINEAPPLE">
-                    <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                </Attribute>
-            </HeuristicSummaryResult>
-            <Models>
-                <KMeansModel Id="10003" Name="CLUS_KM_1_27" Status="Complete" CreationDate="2018-09-18T00:37:20" Annotation="" UseForOutput="true">
-                    <InputMiningData DataUsage="AUTO" MiningUsage="AUTO">
-                        <MiningAttributes>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="APPLE" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="BANANA" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="No" Name="ID" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="MANGO" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="MELON" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="ORANGE" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="PAPAYA" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="PINEAPPLE" DataType="NUMBER" Status="Valid"/>
-                        </MiningAttributes>
-                        <HeuristicResult StatisticTable="ODMR$00_37_17_600257NEUWXIZ">
-                            <Attribute Name="APPLE">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="BANANA">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="MANGO">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="MELON">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="ORANGE">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="PAPAYA">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="PINEAPPLE">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                        </HeuristicResult>
-                    </InputMiningData>
-                    <KMeansAlgo>
-                        <CLUS_NUM_CLUSTERS>5</CLUS_NUM_CLUSTERS>
-                        <KMNS_BLOCK_GROWTH>2</KMNS_BLOCK_GROWTH>
-                        <KMNS_CONV_TOLERANCE>0.01</KMNS_CONV_TOLERANCE>
-                        <KMNS_DISTANCE>KMNS_EUCLIDEAN</KMNS_DISTANCE>
-                        <KMNS_ITERATIONS>30</KMNS_ITERATIONS>
-                        <KMNS_MIN_PCT_ATTR_SUPPORT>0.1</KMNS_MIN_PCT_ATTR_SUPPORT>
-                        <KMNS_NUM_BINS>10</KMNS_NUM_BINS>
-                        <KMNS_SPLIT_CRITERION>KMNS_VARIANCE</KMNS_SPLIT_CRITERION>
-                        <KMNS_DETAILS>KMNS_DETAILS_ALL</KMNS_DETAILS>
-                        <KMNS_RANDOM_SEED>0</KMNS_RANDOM_SEED>
-                    </KMeansAlgo>
-                </KMeansModel>
-                <OClusterModel Id="10002" Name="CLUS_OC_1_27" Status="Complete" CreationDate="2018-09-18T00:37:21" Annotation="" UseForOutput="true">
-                    <InputMiningData DataUsage="AUTO" MiningUsage="AUTO">
-                        <MiningAttributes>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="APPLE" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="BANANA" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="No" Name="ID" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="MANGO" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="MELON" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="ORANGE" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="PAPAYA" DataType="NUMBER" Status="Valid"/>
-                            <MiningAttribute AutoPrep="Yes" MiningType="Categorical" Input="Yes" Name="PINEAPPLE" DataType="NUMBER" Status="Valid"/>
-                        </MiningAttributes>
-                        <HeuristicResult StatisticTable="ODMR$00_37_17_600257NEUWXIZ">
-                            <Attribute Name="APPLE">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="BANANA">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="MANGO">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="MELON">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="ORANGE">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="PAPAYA">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                            <Attribute Name="PINEAPPLE">
-                                <Reason Type="NUM_TO_CAT_MINING_TYPE"/>
-                            </Attribute>
-                        </HeuristicResult>
-                    </InputMiningData>
-                    <OClusterAlgo>
-                        <CLUS_NUM_CLUSTERS>10</CLUS_NUM_CLUSTERS>
-                        <OCLT_MAX_BUFFER>50000.0</OCLT_MAX_BUFFER>
-                        <OCLT_SENSITIVITY>0.5</OCLT_SENSITIVITY>
-                    </OClusterAlgo>
-                </OClusterModel>
-            </Models>
-        </ClusteringBuild>
-        <ClusteringBuild MaxNumPartitions="1000" ODMS_SAMPLING="false" Id="10013" Name="Clust Build 1" Status="Complete">
-            <Icon XCOORD="495" YCOORD="513"></Icon>
+        <ClusteringBuild MaxNumPartitions="1000" ODMS_SAMPLING="false" Id="10013" Name="Clust Build" Status="Complete">
+            <Icon XCOORD="362" YCOORD="568"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -1236,13 +678,13 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                 </Synonym>
             </TextSettings>
             <TextAttributes/>
-            <HeuristicSummaryResult StatisticTable="ODMR$10_29_18_478614UUHUUDN">
+            <HeuristicSummaryResult StatisticTable="ODMR$13_07_08_565766ZFTZBND">
                 <Attribute Name="CID">
                     <Reason Type="INPUT_NONE"/>
                 </Attribute>
             </HeuristicSummaryResult>
             <Models>
-                <KMeansModel Id="10011" Name="CLUS_KM_2_27" Status="Complete" CreationDate="2018-09-18T10:29:20" Annotation="" UseForOutput="true">
+                <KMeansModel Id="10011" Name="CLUS_KM_2_27" Status="Complete" CreationDate="2018-09-18T13:07:15" Annotation="" UseForOutput="true">
                     <InputMiningData DataUsage="AUTO" MiningUsage="AUTO">
                         <MiningAttributes>
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="No" Name="CID" DataType="NUMBER" Status="Valid"/>
@@ -1254,7 +696,7 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PAPAYA_SUM" DataType="NUMBER" Status="Valid"/>
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
                         </MiningAttributes>
-                        <HeuristicResult StatisticTable="ODMR$10_29_18_478614UUHUUDN"/>
+                        <HeuristicResult StatisticTable="ODMR$13_07_08_565766ZFTZBND"/>
                     </InputMiningData>
                     <KMeansAlgo>
                         <CLUS_NUM_CLUSTERS>2</CLUS_NUM_CLUSTERS>
@@ -1269,7 +711,7 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                         <KMNS_RANDOM_SEED>0</KMNS_RANDOM_SEED>
                     </KMeansAlgo>
                 </KMeansModel>
-                <OClusterModel Id="10010" Name="CLUS_OC_2_27" Status="Complete" CreationDate="2018-09-18T10:29:21" Annotation="" UseForOutput="true">
+                <OClusterModel Id="10010" Name="CLUS_OC_2_27" Status="Complete" CreationDate="2018-09-18T13:07:15" Annotation="" UseForOutput="true">
                     <InputMiningData DataUsage="AUTO" MiningUsage="AUTO">
                         <MiningAttributes>
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="No" Name="CID" DataType="NUMBER" Status="Valid"/>
@@ -1281,7 +723,7 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PAPAYA_SUM" DataType="NUMBER" Status="Valid"/>
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
                         </MiningAttributes>
-                        <HeuristicResult StatisticTable="ODMR$10_29_18_478614UUHUUDN"/>
+                        <HeuristicResult StatisticTable="ODMR$13_07_08_565766ZFTZBND"/>
                     </InputMiningData>
                     <OClusterAlgo>
                         <CLUS_NUM_CLUSTERS>2</CLUS_NUM_CLUSTERS>
@@ -1291,8 +733,8 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                 </OClusterModel>
             </Models>
         </ClusteringBuild>
-        <FeatureExtractionBuild MaxNumPartitions="1000" ODMS_SAMPLING="false" Id="10046" Name="Feature Build 1" Status="Complete">
-            <Icon XCOORD="493" YCOORD="420"></Icon>
+        <FeatureExtractionBuild MaxNumPartitions="1000" ODMS_SAMPLING="false" Id="10046" Name="Feature Build" Status="Complete">
+            <Icon XCOORD="364" YCOORD="331"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -1695,13 +1137,35 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                 </Synonym>
             </TextSettings>
             <TextAttributes/>
-            <HeuristicSummaryResult StatisticTable="ODMR$10_29_18_605515SWZQBAL">
+            <HeuristicSummaryResult StatisticTable="ODMR$13_21_32_912744PDYAFBZ">
                 <Attribute Name="CID">
                     <Reason Type="INPUT_NONE"/>
                 </Attribute>
             </HeuristicSummaryResult>
             <Models>
-                <PCAModel Id="10045" Name="FEAT_PCA_2_27" Status="Complete" CreationDate="2018-09-18T10:29:19" Annotation="" UseForOutput="true">
+                <NonNegativeMatrixFactorModel Id="10075" Name="FEAT_NMF_1_27" Status="Complete" CreationDate="2018-09-18T13:21:34" Annotation="" UseForOutput="true">
+                    <InputMiningData DataUsage="AUTO" MiningUsage="AUTO">
+                        <MiningAttributes>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="APPLE_SUM" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="BANANA_SUM" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="No" MiningType="Numerical" Input="No" Name="CID" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="MANGO_SUM" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="MELON_SUM" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="ORANGE_SUM" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PAPAYA_SUM" DataType="NUMBER" Status="Valid"/>
+                            <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
+                        </MiningAttributes>
+                        <HeuristicResult StatisticTable="ODMR$13_21_32_912744PDYAFBZ"/>
+                    </InputMiningData>
+                    <NonNegativeMatrixFactorAlgo>
+                        <FEAT_NUM_FEATURES>2</FEAT_NUM_FEATURES>
+                        <NMFS_CONV_TOLERANCE>0.05</NMFS_CONV_TOLERANCE>
+                        <NMFS_NUM_ITERATIONS>50</NMFS_NUM_ITERATIONS>
+                        <NMFS_RANDOM_SEED>-1</NMFS_RANDOM_SEED>
+                        <NMFS_NONNEGATIVE_SCORING>NMFS_NONNEG_SCORING_ENABLE</NMFS_NONNEGATIVE_SCORING>
+                    </NonNegativeMatrixFactorAlgo>
+                </NonNegativeMatrixFactorModel>
+                <PCAModel Id="10045" Name="FEAT_PCA_2_27" Status="Complete" CreationDate="2018-09-18T12:15:43" Annotation="" UseForOutput="true">
                     <InputMiningData DataUsage="AUTO" MiningUsage="AUTO">
                         <MiningAttributes>
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="No" Name="CID" DataType="NUMBER" Status="Valid"/>
@@ -1713,7 +1177,7 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PAPAYA_SUM" DataType="NUMBER" Status="Valid"/>
                             <MiningAttribute AutoPrep="Yes" MiningType="Numerical" Input="Yes" Name="PINEAPPLE_SUM" DataType="NUMBER" Status="Valid"/>
                         </MiningAttributes>
-                        <HeuristicResult StatisticTable="ODMR$10_29_18_605515SWZQBAL"/>
+                        <HeuristicResult StatisticTable="ODMR$12_15_42_332398ZRXLFCT"/>
                     </InputMiningData>
                     <PCAAlgo>
                         <FEAT_NUM_FEATURES>2</FEAT_NUM_FEATURES>
@@ -1727,8 +1191,8 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
                 </PCAModel>
             </Models>
         </FeatureExtractionBuild>
-        <Apply ColumnOutputOrder="SupplementalColumns" OrderPartitions="Yes" Id="10048" Name="Apply_2" Status="Complete">
-            <Icon XCOORD="661" YCOORD="305"></Icon>
+        <Apply ColumnOutputOrder="SupplementalColumns" OrderPartitions="Yes" Id="10048" Name="Apply Feature" Status="Complete">
+            <Icon XCOORD="528" YCOORD="333"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -1749,7 +1213,9 @@ ON "OUTPUT_2_27"."CID" = "Apply"."CID"
 "PAPAYA_SUM", 
 "PINEAPPLE_SUM", 
 FEATURE_VALUE("FEAT_PCA_2_27", '1' USING *) "FEAT_PCA_2_27_FVAL_1", 
-FEATURE_VALUE("FEAT_PCA_2_27", '2' USING *) "FEAT_PCA_2_27_FVAL_2"
+FEATURE_VALUE("FEAT_PCA_2_27", '2' USING *) "FEAT_PCA_2_27_FVAL_2", 
+FEATURE_VALUE("FEAT_NMF_1_27", '1' USING *) "FEAT_NMF_1_27_FVAL_1", 
+FEATURE_VALUE("FEAT_NMF_1_27", '2' USING *) "FEAT_NMF_1_27_FVAL_2"
 FROM {INPUT_SOURCE} )</SQLExpression>
             <SupplementalAttributes AutoSpec="No">
                 <Attribute Name="CID" DataType="NUMBER" Status="Valid"/>
@@ -1774,13 +1240,25 @@ FROM {INPUT_SOURCE} )</SQLExpression>
                         <Column Name="FEAT_PCA_2_27_FVAL_2" FeatureId="2"/>
                     </FeatureValue>
                 </OutputColumn>
+                <OutputColumn>
+                    <Model IsModelBuilt="true" NodeId="10046" Schema="" Name="FEAT_NMF_1_27" MiningFunction="FEATURE_EXTRACTION" MiningAlgorithm="NONNEGATIVE_MATRIX_FACTOR" Status="Valid" UseForOutput="true" ModelId="10075"/>
+                    <FeatureValue>
+                        <Column Name="FEAT_NMF_1_27_FVAL_1" FeatureId="1"/>
+                    </FeatureValue>
+                </OutputColumn>
+                <OutputColumn>
+                    <Model IsModelBuilt="true" NodeId="10046" Schema="" Name="FEAT_NMF_1_27" MiningFunction="FEATURE_EXTRACTION" MiningAlgorithm="NONNEGATIVE_MATRIX_FACTOR" Status="Valid" UseForOutput="true" ModelId="10075"/>
+                    <FeatureValue>
+                        <Column Name="FEAT_NMF_1_27_FVAL_2" FeatureId="2"/>
+                    </FeatureValue>
+                </OutputColumn>
             </OutputColumns>
             <CaseAttributes>
                 <Attribute Name="CID" DataType="NUMBER" Status="Valid"/>
             </CaseAttributes>
         </Apply>
-        <Apply ColumnOutputOrder="SupplementalColumns" OrderPartitions="Yes" Id="10053" Name="Apply" Status="Complete">
-            <Icon XCOORD="649" YCOORD="638"></Icon>
+        <Apply ColumnOutputOrder="SupplementalColumns" OrderPartitions="Yes" Id="10053" Name="Apply Clust" Status="Complete">
+            <Icon XCOORD="524" YCOORD="566"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -1803,25 +1281,25 @@ FROM {INPUT_SOURCE} )</SQLExpression>
             </SupplementalAttributes>
             <OutputColumns AutoSpec="Yes">
                 <OutputColumn>
-                    <Model IsModelBuilt="true" NodeId="10013" Schema="" Name="CLUS_KM_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="KMEANS" Status="Valid" UseForOutput="true" ModelId="10011"/>
+                    <Model IsModelBuilt="false" NodeId="10013" Schema="" Name="CLUS_KM_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="KMEANS" Status="Valid" UseForOutput="true" ModelId="10011"/>
                     <ClusterId>
                         <Column Name="CLUS_KM_2_27_CLID"/>
                     </ClusterId>
                 </OutputColumn>
                 <OutputColumn>
-                    <Model IsModelBuilt="true" NodeId="10013" Schema="" Name="CLUS_KM_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="KMEANS" Status="Valid" UseForOutput="true" ModelId="10011"/>
+                    <Model IsModelBuilt="false" NodeId="10013" Schema="" Name="CLUS_KM_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="KMEANS" Status="Valid" UseForOutput="true" ModelId="10011"/>
                     <ClusterProbability>
                         <Column Name="CLUS_KM_2_27_PROB"/>
                     </ClusterProbability>
                 </OutputColumn>
                 <OutputColumn>
-                    <Model IsModelBuilt="true" NodeId="10013" Schema="" Name="CLUS_OC_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="O_CLUSTER" Status="Valid" UseForOutput="true" ModelId="10010"/>
+                    <Model IsModelBuilt="false" NodeId="10013" Schema="" Name="CLUS_OC_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="O_CLUSTER" Status="Valid" UseForOutput="true" ModelId="10010"/>
                     <ClusterId>
                         <Column Name="CLUS_OC_2_27_CLID"/>
                     </ClusterId>
                 </OutputColumn>
                 <OutputColumn>
-                    <Model IsModelBuilt="true" NodeId="10013" Schema="" Name="CLUS_OC_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="O_CLUSTER" Status="Valid" UseForOutput="true" ModelId="10010"/>
+                    <Model IsModelBuilt="false" NodeId="10013" Schema="" Name="CLUS_OC_2_27" MiningFunction="CLUSTERING" MiningAlgorithm="O_CLUSTER" Status="Valid" UseForOutput="true" ModelId="10010"/>
                     <ClusterProbability>
                         <Column Name="CLUS_OC_2_27_PROB"/>
                     </ClusterProbability>
@@ -1831,8 +1309,8 @@ FROM {INPUT_SOURCE} )</SQLExpression>
                 <Attribute Name="CID" DataType="NUMBER" Status="Valid"/>
             </CaseAttributes>
         </Apply>
-        <Graph ViewName="OUTPUT_3_27" ViewDirty="true" SampleDirty="true" Id="10051" Name="Graph 1" Status="Ready">
-            <Icon XCOORD="814" YCOORD="306"></Icon>
+        <Graph ViewName="OUTPUT_3_27" ViewDirty="true" SampleDirty="true" Id="10051" Name="Graph 1" Status="Complete">
+            <Icon XCOORD="790" YCOORD="331"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -1846,6 +1324,8 @@ FROM {INPUT_SOURCE} )</SQLExpression>
             <SQLExpression>"N$10051" as (SELECT 
 "FEAT_PCA_2_27_FVAL_1"
 , "FEAT_PCA_2_27_FVAL_2"
+, "FEAT_NMF_1_27_FVAL_1"
+, "FEAT_NMF_1_27_FVAL_2"
 , "CID"
 , "APPLE_SUM"
 , "BANANA_SUM"
@@ -1895,6 +1375,8 @@ FROM
             <GraphSourceAttributes>
                 <Attribute Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
                 <Attribute Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <Attribute Name="FEAT_NMF_1_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <Attribute Name="FEAT_NMF_1_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
                 <Attribute Name="CID" DataType="NUMBER" Status="Valid"/>
                 <Attribute Name="APPLE_SUM" DataType="NUMBER" Status="Valid"/>
                 <Attribute Name="BANANA_SUM" DataType="NUMBER" Status="Valid"/>
@@ -1909,11 +1391,11 @@ FROM
                 <Method>
                     <Random Seed="12345"/>
                 </Method>
-                <OutputTable Name="ODMR$10_24_43_708851LRABJPI" CreationDate="2018-09-18T10:24:43"/>
+                <OutputTable Name="ODMR$21_27_57_784962YHYGFZU" CreationDate="2018-09-24T21:27:57"/>
             </SampleSettings>
         </Graph>
-        <Graph ViewName="OUTPUT_4_27" ViewDirty="true" SampleDirty="true" Id="10073" Name="Graph" Status="Ready">
-            <Icon XCOORD="958" YCOORD="641"></Icon>
+        <Graph ViewName="OUTPUT_4_27" ViewDirty="true" SampleDirty="true" Id="10073" Name="Graph" Status="Complete">
+            <Icon XCOORD="794" YCOORD="566"></Icon>
             <Messages/>
             <Parallelism Enable="false">
                 <SystemDetermined/>
@@ -1927,6 +1409,8 @@ FROM
             <SQLExpression>"N$10073" as (SELECT 
 "FEAT_PCA_2_27_FVAL_1"
 , "FEAT_PCA_2_27_FVAL_2"
+, "FEAT_NMF_1_27_FVAL_1"
+, "FEAT_NMF_1_27_FVAL_2"
 , "CID"
 , "APPLE_SUM"
 , "BANANA_SUM"
@@ -1945,17 +1429,17 @@ FROM
 {INPUT_SOURCE}
  )</SQLExpression>
             <GraphSettings>
-                <GraphSetting Name="Graph3" Type="Scatter" Id="2ed7d05a-64e9-4253-8d9d-44392e4ff97c">
+                <GraphSetting Name="PCA Result group by KM Clust" Type="Scatter" Id="2b5d5b38-3485-45aa-8a0c-5bbe538de741">
                     <Comment></Comment>
-                    <XAttribute Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
+                    <XAttribute Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Invalid"/>
                     <XBinningSettings BinningEnabled="false" BinningKind="EqualWidth">
                         <NumericBinCount>10</NumericBinCount>
                     </XBinningSettings>
                     <YAttributes>
-                        <YAttribute Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
+                        <YAttribute Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Invalid"/>
                     </YAttributes>
-                    <GroupByOption GroupByEnabled="false">
-                        <GroupByAttribute Name="&lt;dummy&gt;" DataType="&lt;dummy&gt;" Status="Missing" Alias="&lt;dummy&gt;"/>
+                    <GroupByOption GroupByEnabled="true">
+                        <GroupByAttribute Name="CLUS_KM_2_27_CLID" DataType="NUMBER" Status="Valid"/>
                         <BinningSettings BinningEnabled="false" BinningKind="EqualWidth">
                             <NumericBinCount>10</NumericBinCount>
                         </BinningSettings>
@@ -1965,6 +1449,8 @@ FROM
             <GraphSourceAttributes>
                 <Attribute Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
                 <Attribute Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <Attribute Name="FEAT_NMF_1_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
+                <Attribute Name="FEAT_NMF_1_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
                 <Attribute Name="CID" DataType="NUMBER" Status="Valid"/>
                 <Attribute Name="APPLE_SUM" DataType="NUMBER" Status="Valid"/>
                 <Attribute Name="BANANA_SUM" DataType="NUMBER" Status="Valid"/>
@@ -1984,66 +1470,62 @@ FROM
                 <Method>
                     <Random Seed="12345"/>
                 </Method>
+                <OutputTable Name="ODMR$21_25_26_486906VQJTBYF" CreationDate="2018-09-24T21:25:26"/>
             </SampleSettings>
         </Graph>
     </Nodes>
     <Links>
-        <Link Id="10006" From="10001" To="10005" Name="Link" Label="From &quot;FRUIT_TABLE_NONULL&quot; to &quot;Clust Build&quot;">
-            <ConnectorGraphicsInfo>
-                <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
-            </ConnectorGraphicsInfo>
-        </Link>
         <Link Id="10009" From="10007" To="10008" Name="Link" Label="From &quot;FRUIT&quot; to &quot;Aggregate&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10014" From="10008" To="10013" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Clust Build 1&quot;">
+        <Link Id="10014" From="10008" To="10013" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Clust Build&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10047" From="10008" To="10046" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Feature Build 1&quot;">
+        <Link Id="10047" From="10008" To="10046" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Feature Build&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10049" From="10046" To="10048" Name="Link" Label="From &quot;Feature Build 1&quot; to &quot;Apply_2&quot;">
+        <Link Id="10049" From="10046" To="10048" Name="Link" Label="From &quot;Feature Build&quot; to &quot;Apply Feature&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10050" From="10008" To="10048" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Apply_2&quot;">
+        <Link Id="10050" From="10008" To="10048" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Apply Feature&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10052" From="10048" To="10051" Name="Link" Label="From &quot;Apply_2&quot; to &quot;Graph 1&quot;">
+        <Link Id="10052" From="10048" To="10051" Name="Link" Label="From &quot;Apply Feature&quot; to &quot;Graph 1&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10054" From="10013" To="10053" Name="Link" Label="From &quot;Clust Build 1&quot; to &quot;Apply&quot;">
+        <Link Id="10054" From="10013" To="10053" Name="Link" Label="From &quot;Clust Build&quot; to &quot;Apply Clust&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10055" From="10008" To="10053" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Apply&quot;">
+        <Link Id="10055" From="10008" To="10053" Name="Link" Label="From &quot;Aggregate&quot; to &quot;Apply Clust&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10069" From="10048" To="10068" Name="Link" Label="From &quot;Apply_2&quot; to &quot;OUTPUT_2_27&quot;">
+        <Link Id="10069" From="10048" To="10068" Name="Link" Label="From &quot;Apply Feature&quot; to &quot;OUTPUT_FEAT&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10071" From="10068" To="10070" Name="Link" Label="From &quot;OUTPUT_2_27&quot; to &quot;Join&quot;">
+        <Link Id="10071" From="10068" To="10070" Name="Link" Label="From &quot;OUTPUT_FEAT&quot; to &quot;Join&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10072" From="10053" To="10070" Name="Link" Label="From &quot;Apply&quot; to &quot;Join&quot;">
+        <Link Id="10072" From="10053" To="10070" Name="Link" Label="From &quot;Apply Clust&quot; to &quot;Join&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
