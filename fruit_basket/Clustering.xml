@@ -1394,7 +1394,7 @@ FROM
                 <OutputTable Name="ODMR$21_27_57_784962YHYGFZU" CreationDate="2018-09-24T21:27:57"/>
             </SampleSettings>
         </Graph>
-        <Graph ViewName="OUTPUT_4_27" ViewDirty="true" SampleDirty="true" Id="10073" Name="Graph" Status="Complete">
+        <Graph ViewName="OUTPUT_4_27" ViewDirty="true" SampleDirty="true" Id="10073" Name="Graph 2" Status="Complete">
             <Icon XCOORD="794" YCOORD="566"></Icon>
             <Messages/>
             <Parallelism Enable="false">
@@ -1431,12 +1431,12 @@ FROM
             <GraphSettings>
                 <GraphSetting Name="PCA Result group by KM Clust" Type="Scatter" Id="2b5d5b38-3485-45aa-8a0c-5bbe538de741">
                     <Comment></Comment>
-                    <XAttribute Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Invalid"/>
+                    <XAttribute Name="FEAT_PCA_2_27_FVAL_1" DataType="BINARY_DOUBLE" Status="Valid"/>
                     <XBinningSettings BinningEnabled="false" BinningKind="EqualWidth">
                         <NumericBinCount>10</NumericBinCount>
                     </XBinningSettings>
                     <YAttributes>
-                        <YAttribute Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Invalid"/>
+                        <YAttribute Name="FEAT_PCA_2_27_FVAL_2" DataType="BINARY_DOUBLE" Status="Valid"/>
                     </YAttributes>
                     <GroupByOption GroupByEnabled="true">
                         <GroupByAttribute Name="CLUS_KM_2_27_CLID" DataType="NUMBER" Status="Valid"/>
@@ -1530,7 +1530,7 @@ FROM
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
         </Link>
-        <Link Id="10074" From="10070" To="10073" Name="Link" Label="From &quot;Join&quot; to &quot;Graph&quot;">
+        <Link Id="10074" From="10070" To="10073" Name="Link" Label="From &quot;Join&quot; to &quot;Graph 2&quot;">
             <ConnectorGraphicsInfo>
                 <Coordinates XCoordinate="0.0" YCoordinate="0.0"/>
             </ConnectorGraphicsInfo>
